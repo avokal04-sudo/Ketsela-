@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎂 Happy Birthday Ketsela!</title>
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      /* Replace with Ketsela's photo URL or keep the dark overlay */
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                  url('https://images.unsplash.com/photo-1504198453319-5ce911bafcde?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')
+                  center/cover no-repeat fixed;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(15px);
+      border-radius: 30px;
+      padding: 40px 25px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      color: #2d2d2d;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .message {
+      font-size: 1.3rem;
+      line-height: 1.7;
+      margin: 25px 0;
+      color: #4a4a4a;
+    }
+
+    /* Audio player style */
+    .audio-container {
+      margin: 20px 0;
+      background: #fff5f5;
+      border-radius: 40px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .audio-btn {
+      background: #e85d75;
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      box-shadow: 0 3px 8px rgba(232,93,117,0.4);
+    }
+    .audio-btn:hover {
+      background: #d44a63;
+      transform: scale(1.05);
+    }
+    .now-playing {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    /* Cake section */
+    .cake-area {
+      margin: 30px 0;
+      position: relative;
+    }
+    .cake-img {
+      font-size: 5rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+      user-select: none;
+    }
+    .cake-img:hover {
+      transform: scale(1.1);
+    }
+    .candles {
+      display: none;
+      font-size: 2.5rem;
+      margin-top: 5px;
+      letter-spacing: 8px;
+      animation: flicker 0.8s infinite alternate;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.7; transform: scale(1.02); }
+    }
+    .blow-text {
+      display: none;
+      margin-top: 8px;
+      font-size: 1rem;
+      color: #e85d75;
+      font-weight: bold;
+    }
+
+    /* Game: balloon pop */
+    .game-section {
+      margin: 30px 0;
+      background: #f0f9ff;
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .balloons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+    .balloon {
+      font-size: 3rem;
+      cursor: pointer;
+      transition: 0.2s;
+      user-select: none;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    }
+    .balloon:hover {
+      transform: scale(1.2);
+    }
+    .balloon.popped {
+      visibility: hidden;
+    }
+    .surprise-msg {
+      display: none;
+      margin-top: 15px;
+      font-size: 1.1rem;
+      color: #d44a63;
+      font-weight: bold;
+    }
+
+    .letter, .joke {
+      background: #fff8f0;
+      border-left: 5px solid #e85d75;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: left;
+      margin: 25px 0;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .joke {
+      background: #f0f9ff;
+      border-color: #f9a826;
+      font-style: italic;
+    }
+
+    .goat-line {
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin: 15px 0 5px;
+    }
+
+    .confetti-btn {
+      background: #e85d75;
+      color: white;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 14px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 20px 0 10px;
+      box-shadow: 0 5px 15px rgba(232,93,117,0.4);
+    }
+    .confetti-btn:hover {
+      background: #d44a63;
+      transform: scale(1.03);
+    }
+
+    .hidden-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #d44a63;
+      font-weight: 600;
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 2rem; }
+      .message { font-size: 1rem; }
+      .balloon { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎂🎈 Happy Birthday Ketsela! 🎉🎁</h1>
+    
+    <p class="message">
+      🌟 To the kindest soul I know,<br>
+      a genuine human, a true helper, and the definition of good vibes ✨.<br>
+      You’re real, Ketsela – and that’s everything.<br>
+      Hope your day is filled with all the joy you bring to others! 💖
+    </p>
+
+    <!-- Music player with your file -->
+    <div class="audio-container">
+      <span>🎵</span>
+      <button id="playBtn" class="audio-btn">▶️</button>
+      <span class="now-playing" id="songLabel">Happy Birthday Classical Guitar</span>
+    </div>
+    <!-- The audio file should be in the same folder as this HTML -->
+    <audio id="birthdayAudio" loop>
+      <source src="Happy-Birthday-Happy-Birthday-Classical-Guitar-V.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- 🎂 Interactive cake -->
+    <div class="cake-area">
+      <div class="cake-img" id="cake">🎂</div>
+      <div class="candles" id="candles">🕯️🕯️🕯️🕯️🕯️</div>
+      <div class="blow-text" id="blowHint">Click the candles to blow them out! 💨</div>
+    </div>
+
+    <!-- 🎮 Balloon pop game -->
+    <div class="game-section">
+      <p style="font-weight:bold;">🎈 Pop the balloons to reveal a surprise!</p>
+      <div class="balloons" id="balloonField">
+        <span class="balloon">🎈</span>
+        <span class="balloon">🎈</span>
+        <span class="balloon">🎈</span>
+        <span class="balloon">🎈</span>
+        <span class="balloon">🎈</span>
+      </div>
+      <div class="surprise-msg" id="balloonSurprise">🎊 You're the best friend ever! 🎊</div>
+    </div>
+
+    <!-- Letter -->
+    <div class="letter">
+      <h3>📜 A small letter, big truth</h3>
+      <p>
+        Ketsela, you don’t just walk into a room – you light it up 🔥.<br>
+        Your kindness is quiet but powerful. The way you show up for people,
+        the way you help without being asked – that’s rare. Never change.
+        The world needs more humans like you. ♥️
+      </p>
+    </div>
+
+    <!-- Joke -->
+    <div class="joke">
+      🤣 “Why did the football pitch become a birthday cake?<br>
+      Because Ketsela was about to get iced… 🧊<br>
+      Okay, that joke is colder than a goalkeeper’s heart. But you know what’s never cold?
+      Our friendship. And also…”
+    </div>
+
+    <!-- GOAT line -->
+    <p class="goat-line">🐐 Messi is the GOAT. No debate. ⚽🏆</p>
+
+    <!-- Confetti explosion button -->
+    <button class="confetti-btn" onclick="launchConfetti()">🎉 Celebrate Ketsela!</button>
+    <div class="hidden-message" id="secretMsg">
+      P.S. You’re not just a friend – you’re family. 🫶<br>
+      And Messi still the undisputed GOAT. 🤝
+    </div>
+  </div>
+
+  <script>
+    // ---------- AUDIO PLAYER ----------
+    const audio = document.getElementById('birthdayAudio');
+    const playBtn = document.getElementById('playBtn');
+    let isPlaying = false;
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        playBtn.textContent = '▶️';
+        isPlaying = false;
+      } else {
+        audio.play().then(() => {
+          playBtn.textContent = '⏸️';
+          isPlaying = true;
+        }).catch(() => {
+          alert('🎵 Click again to play – the browser needs you to interact first!');
+        });
+      }
+    });
+
+    // When audio ends on its own (though it loops), button updates aren't needed,
+    // but just in case we sync on pause/play events
+    audio.addEventListener('play', () => { playBtn.textContent = '⏸️'; isPlaying = true; });
+    audio.addEventListener('pause', () => { playBtn.textContent = '▶️'; isPlaying = false; });
+
+    // ---------- CAKE SURPRISE ----------
+    const cake = document.getElementById('cake');
+    const candles = document.getElementById('candles');
+    const blowHint = document.getElementById('blowHint');
+    let candlesLit = false;
+
+    cake.addEventListener('click', () => {
+      if (!candlesLit) {
+        // light the candles
+        candles.style.display = 'block';
+        blowHint.style.display = 'block';
+        cake.textContent = '🎂'; // cake stays
+        candlesLit = true;
+      }
+    });
+
+    // Blow out candles by clicking on them
+    candles.addEventListener('click', () => {
+      if (candlesLit) {
+        candles.style.display = 'none';
+        blowHint.innerHTML = '🎉 You blew them out! Make a wish, Ketsela! ✨';
+        // Launch a small confetti burst for blowing out candles
+        confetti({ particleCount: 60, spread: 50, origin: { y: 0.5, x: 0.5 } });
+        candlesLit = false;
+      }
+    });
+
+    // ---------- BALLOON POP GAME ----------
+    const balloons = document.querySelectorAll('.balloon');
+    const surpriseMsg = document.getElementById('balloonSurprise');
+    let poppedCount = 0;
+
+    balloons.forEach(balloon => {
+      balloon.addEventListener('click', () => {
+        if (!balloon.classList.contains('popped')) {
+          balloon.classList.add('popped');
+          balloon.textContent = '💥';
+          poppedCount++;
+          // tiny confetti per pop
+          confetti({ particleCount: 5, spread: 30, origin: { y: 0.4 } });
+
+          if (poppedCount === balloons.length) {
+            surpriseMsg.style.display = 'block';
+            // big confetti
+            confetti({ particleCount: 80, spread: 70 });
+          }
+        }
+      });
+    });
+
+    // ---------- MAIN CONFETTI BUTTON ----------
+    function launchConfetti() {
+      confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+      confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 1 } });
+      document.getElementById('secretMsg').style.display = 'block';
+    }
+  </script>
+</body>
+  </html>
